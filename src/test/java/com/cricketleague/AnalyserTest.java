@@ -48,7 +48,7 @@ public class AnalyserTest {
         CricketLeagueAnalyser cricketLeagueAnalyser = new CricketLeagueAnalyser();
         try {
             cricketLeagueAnalyser.getCount(RUNS_FILE);
-            String sortedList = cricketLeagueAnalyser.getBattingAverage();
+            String sortedList = cricketLeagueAnalyser.toSort(Sort.sortfields.AVG_BATTING_RATE);
             Batsman[] censusCSV = new Gson().fromJson(sortedList, Batsman[].class);
             Assert.assertEquals("MS Dhoni", censusCSV[100].player);
         } catch (CricketLeagueException e) {
@@ -61,7 +61,7 @@ public class AnalyserTest {
         CricketLeagueAnalyser cricketLeagueAnalyser = new CricketLeagueAnalyser();
         try {
             cricketLeagueAnalyser.getCount(RUNS_FILE);
-            String sortedList = cricketLeagueAnalyser.getStrikingRate();
+            String sortedList = cricketLeagueAnalyser.toSort(Sort.sortfields.STRIKING_RATE);
             Batsman[] censusCSV = new Gson().fromJson(sortedList, Batsman[].class);
             Assert.assertEquals("Ishant Sharma", censusCSV[100].player);
         } catch (CricketLeagueException e) {
