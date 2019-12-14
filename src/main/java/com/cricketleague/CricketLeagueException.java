@@ -1,7 +1,7 @@
 package com.cricketleague;
 
 public class CricketLeagueException extends Exception {
-    public enum ExceptionType {FILE_PROBLEM
+    public enum ExceptionType {FILE_PROBLEM,POO
     }
     ExceptionType type;
 
