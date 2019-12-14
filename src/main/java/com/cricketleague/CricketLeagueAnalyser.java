@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 public class CricketLeagueAnalyser {
-    List<Batsman> batsmanList=new ArrayList<>();
+    List<Batsman> batsmanList;
 
     public int getCount(String runsFile) throws CricketLeagueException {
         try {
@@ -31,12 +31,12 @@ public class CricketLeagueAnalyser {
         }
     }
 
-    public String getBattingAverage() {
-        Comparator<Batsman> comparator =Comparator.comparing(player -> player.average);
-        ArrayList c=batsmanList.stream()
-                 .sorted(comparator)
+    public String toSort(Sort.sortfields sortfields) {
+        Comparator<Batsman> comparator = new Sort().getField(sortfields);
+        ArrayList c = batsmanList.stream()
+                .sorted(comparator)
                 .collect(Collectors.toCollection(ArrayList::new));
-        String sortedData=new Gson().toJson(c);
+        String sortedData = new Gson().toJson(c);
         return sortedData;
     }
 }
