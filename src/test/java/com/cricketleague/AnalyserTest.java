@@ -17,7 +17,7 @@ public class AnalyserTest {
         int getCount = 0;
         try {
             getCount = cricketLeagueAnalyser.getCount(RUNS_FILE);
-            Assert.assertEquals(101, getCount);
+            Assert.assertEquals(100, getCount);
         } catch (CricketLeagueException e) {
             e.printStackTrace();
         }
@@ -50,7 +50,7 @@ public class AnalyserTest {
             cricketLeagueAnalyser.getCount(RUNS_FILE);
             String sortedList = cricketLeagueAnalyser.toSort(Sort.sortfields.AVG_BATTING_RATE);
             Batsman[] censusCSV = new Gson().fromJson(sortedList, Batsman[].class);
-            Assert.assertEquals("MS Dhoni", censusCSV[100].player);
+            Assert.assertEquals("MS Dhoni", censusCSV[99].player);
         } catch (CricketLeagueException e) {
             e.printStackTrace();
         }
@@ -63,7 +63,7 @@ public class AnalyserTest {
             cricketLeagueAnalyser.getCount(RUNS_FILE);
             String sortedList = cricketLeagueAnalyser.toSort(Sort.sortfields.STRIKING_RATE);
             Batsman[] censusCSV = new Gson().fromJson(sortedList, Batsman[].class);
-            Assert.assertEquals("Ishant Sharma", censusCSV[100].player);
+            Assert.assertEquals("Ishant Sharma", censusCSV[99].player);
         } catch (CricketLeagueException e) {
             e.printStackTrace();
         }
