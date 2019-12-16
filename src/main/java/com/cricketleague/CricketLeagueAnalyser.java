@@ -14,13 +14,22 @@ import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 public class CricketLeagueAnalyser {
-    List<Batsman> batsmanList;
+    Map<String,Batsman> batsmanList;
+
+    public CricketLeagueAnalyser(){
+        this.batsmanList=new HashMap<>();
+    }
 
     public int getCount(String runsFile) throws CricketLeagueException {
         try {
             Reader reader = Files.newBufferedReader(Paths.get(runsFile));
             ICSVBuilder icsvBuilder= CSVBuilderFactory.createCSVBuilder();
-            batsmanList=icsvBuilder.getCSVFileList(reader,Batsman.class);
+            Iterator<Batsman> csvIterator=icsvBuilder.getCSVFileIterator(reader,Batsman.class);
+            Iterable<Batsman> batsmanIterable=()-> csvIterator;
+            StreamSupport.stream(batsmanIterable.spliterator(), false).
+                    map(Batsman.class::cast).
+                    forEach(iplCSV -> batsmanList.put(iplCSV.player, new Batsman(iplCSV)));
+           // batsmanList=icsvBuilder.getCSVFileList(reader,Batsman.class);
             return batsmanList.size();
         } catch (IOException e) {
             throw new CricketLeagueException(CricketLeagueException.ExceptionType.FILE_PROBLEM,"Wrong file inputted");
@@ -33,7 +42,7 @@ public class CricketLeagueAnalyser {
 
     public String toSort(Sort.sortfields sortfields) {
         Comparator<Batsman> comparator = new Sort().getField(sortfields);
-        ArrayList c = batsmanList.stream()
+        ArrayList c = batsmanList.values().stream()
                 .sorted(comparator)
                 .collect(Collectors.toCollection(ArrayList::new));
         String sortedData = new Gson().toJson(c);
