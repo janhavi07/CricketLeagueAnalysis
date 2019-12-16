@@ -20,7 +20,7 @@ public class CricketLeagueAnalyser {
         this.batsmanList=new HashMap<>();
     }
 
-    public int getCount(String runsFile) throws CricketLeagueException {
+    public int loadCensus(String runsFile) throws CricketLeagueException {
         try {
             Reader reader = Files.newBufferedReader(Paths.get(runsFile));
             ICSVBuilder icsvBuilder= CSVBuilderFactory.createCSVBuilder();
@@ -29,7 +29,6 @@ public class CricketLeagueAnalyser {
             StreamSupport.stream(batsmanIterable.spliterator(), false).
                     map(Batsman.class::cast).
                     forEach(iplCSV -> batsmanList.put(iplCSV.player, new Batsman(iplCSV)));
-           // batsmanList=icsvBuilder.getCSVFileList(reader,Batsman.class);
             return batsmanList.size();
         } catch (IOException e) {
             throw new CricketLeagueException(CricketLeagueException.ExceptionType.FILE_PROBLEM,"Wrong file inputted");
