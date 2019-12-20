@@ -83,13 +83,13 @@ public class AnalyserTest {
     }
 
     @Test
-    public void givenIPLFile_WithSameStrikingRate_ShouldReturn_WithMax_4sAnd6s() {
+    public void givenIPLFile_BestStrikingRate_With6S_4S() {
         CricketLeagueAnalyser cricketLeagueAnalyser = new CricketLeagueAnalyser();
         try {
             cricketLeagueAnalyser.loadData(RUNS_FILE);
-            String sortedList = cricketLeagueAnalyser.toSort(Sort.sortfields.FOURS_SIXES, Sort.sortfields.STRIKING_RATE);
+            String sortedList = cricketLeagueAnalyser.toSort(Sort.sortfields.BEST_STRIKING_RATE_WITH6S_4S);
             Batsman[] ipl = new Gson().fromJson(sortedList, Batsman[].class);
-
+            Assert.assertEquals("Ishant Sharma", ipl[99].player);
         } catch (CricketLeagueException e) {
             e.printStackTrace();
         }
