@@ -14,13 +14,12 @@ public class Sort {
         Comparator<Batsman> strikingComparator = Comparator.comparing(player -> player.strikingRate);
         Comparator<Batsman> fourComparator = Comparator.comparing(player -> player.fours * 4 + player.sixes * 6);
         Comparator<Batsman> bestStriking6S4S = Comparator.comparing(player -> (player.fours * 4 + player.sixes * 6) / player.ballsFaced);
-        compareField.put(sortfields.AVG_BATTING_RATE, avgComparator);
-        compareField.put(sortfields.STRIKING_RATE, strikingComparator);
-        compareField.put(sortfields.FOURS_SIXES, fourComparator);
-        compareField.put(sortfields.BEST_STRIKING_RATE_WITH6S_4S, bestStriking6S4S);
+        compareField.put(sortfields.AVG_BATTING_RATE ,avgComparator.reversed());
+        compareField.put(sortfields.STRIKING_RATE, strikingComparator.reversed());
+        compareField.put(sortfields.FOURS_SIXES, fourComparator.reversed());
+        compareField.put(sortfields.BEST_STRIKING_RATE_WITH6S_4S, bestStriking6S4S.reversed());
         Comparator<Batsman> comparator = compareField.get(sortField[0]);
         return comparator;
     }
-
 }
 

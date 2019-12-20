@@ -63,7 +63,7 @@ public class AnalyserTest {
             cricketLeagueAnalyser.loadData(RUNS_FILE);
             String sortedList = cricketLeagueAnalyser.toSort(Sort.sortfields.STRIKING_RATE);
             Batsman[] ipl = new Gson().fromJson(sortedList, Batsman[].class);
-            Assert.assertEquals("Ishant Sharma", ipl[99].player);
+            Assert.assertEquals("Ishant Sharma", ipl[0].player);
         } catch (CricketLeagueException e) {
             e.printStackTrace();
         }
@@ -76,7 +76,7 @@ public class AnalyserTest {
             cricketLeagueAnalyser.loadData(RUNS_FILE);
             String sortedList = cricketLeagueAnalyser.toSort(Sort.sortfields.FOURS_SIXES);
             Batsman[] ipl = new Gson().fromJson(sortedList, Batsman[].class);
-            Assert.assertEquals("Andre Russell", ipl[99].player);
+            Assert.assertEquals("Andre Russell", ipl[0].player);
         } catch (CricketLeagueException e) {
             e.printStackTrace();
         }
@@ -89,7 +89,20 @@ public class AnalyserTest {
             cricketLeagueAnalyser.loadData(RUNS_FILE);
             String sortedList = cricketLeagueAnalyser.toSort(Sort.sortfields.BEST_STRIKING_RATE_WITH6S_4S);
             Batsman[] ipl = new Gson().fromJson(sortedList, Batsman[].class);
-            Assert.assertEquals("Ishant Sharma", ipl[99].player);
+            Assert.assertEquals("Ishant Sharma", ipl[0].player);
+        } catch (CricketLeagueException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void givenIPLFile_CricketersWithBestAverages_BestStriking() {
+        CricketLeagueAnalyser cricketLeagueAnalyser = new CricketLeagueAnalyser();
+        try {
+            cricketLeagueAnalyser.loadData(RUNS_FILE);
+            String sortedList = cricketLeagueAnalyser.toSort(Sort.sortfields.AVG_BATTING_RATE, Sort.sortfields.STRIKING_RATE);
+            Batsman[] ipl = new Gson().fromJson(sortedList, Batsman[].class);
+            Assert.assertEquals("David Warner", ipl[0].player);
         } catch (CricketLeagueException e) {
             e.printStackTrace();
         }
