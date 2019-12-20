@@ -28,7 +28,7 @@ public class Batsman {
     public int highScore;
 
     @CsvBindByName(column = "BF",required = true)
-    public int battingF;
+    public int ballsFaced;
 
     @CsvBindByName(column = "100",required = true)
     public int hundreds;
@@ -58,6 +58,6 @@ public class Batsman {
         noOfOvers=iplCSV.noOfOvers;
         position=iplCSV.position;
         sixes=iplCSV.sixes;
-        battingF=iplCSV.battingF;
+        ballsFaced =iplCSV.ballsFaced;
     }
 }

@@ -20,7 +20,7 @@ public class CricketLeagueAnalyser {
         this.batsmanList=new HashMap<>();
     }
 
-    public int loadCensus(String runsFile) throws CricketLeagueException {
+    public int loadData(String runsFile) throws CricketLeagueException {
         try {
             Reader reader = Files.newBufferedReader(Paths.get(runsFile));
             ICSVBuilder icsvBuilder= CSVBuilderFactory.createCSVBuilder();
@@ -39,10 +39,19 @@ public class CricketLeagueAnalyser {
         }
     }
 
-    public String toSort(Sort.sortfields sortfields) {
-        Comparator<Batsman> comparator = new Sort().getField(sortfields);
+    public String toSort(Sort.sortfields... sortfields) {
+        Comparator<Batsman> comparator = null;
+        if(sortfields.length==2){
+            comparator=new Sort().getField(sortfields[0]).thenComparing(new Sort().getField(sortfields[1]));
+            return this.getSortedString(comparator);
+        }
+        comparator=new Sort().getField(sortfields[0]);
+        return this.getSortedString(comparator);
+    }
+
+    private String getSortedString(Comparator<Batsman> CSVComparator){
         ArrayList c = batsmanList.values().stream()
-                .sorted(comparator)
+                .sorted(CSVComparator)
                 .collect(Collectors.toCollection(ArrayList::new));
         String sortedData = new Gson().toJson(c);
         return sortedData;
