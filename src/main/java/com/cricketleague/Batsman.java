@@ -30,6 +30,9 @@ public class Batsman {
     @CsvBindByName(column = "BF", required = true)
     public int ballsFaced;
 
+    @CsvBindByName(column = "Runs",required = true)
+    public int runs;
+
     @CsvBindByName(column = "100", required = true)
     public int hundreds;
 

@@ -50,7 +50,7 @@ public class AnalyserTest {
             cricketLeagueAnalyser.loadData(RUNS_FILE);
             String sortedList = cricketLeagueAnalyser.toSort(Sort.sortfields.AVG_BATTING_RATE);
             Batsman[] censusCSV = new Gson().fromJson(sortedList, Batsman[].class);
-            Assert.assertEquals("MS Dhoni", censusCSV[99].player);
+            Assert.assertEquals("David Warner", censusCSV[0].player);
         } catch (CricketLeagueException e) {
             e.printStackTrace();
         }
@@ -101,6 +101,19 @@ public class AnalyserTest {
         try {
             cricketLeagueAnalyser.loadData(RUNS_FILE);
             String sortedList = cricketLeagueAnalyser.toSort(Sort.sortfields.AVG_BATTING_RATE, Sort.sortfields.STRIKING_RATE);
+            Batsman[] ipl = new Gson().fromJson(sortedList, Batsman[].class);
+            Assert.assertEquals("David Warner", ipl[0].player);
+        } catch (CricketLeagueException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void givenIPLFile_CricketersWithMaximumRuns_WithBestAverages() {
+        CricketLeagueAnalyser cricketLeagueAnalyser = new CricketLeagueAnalyser();
+        try {
+            cricketLeagueAnalyser.loadData(RUNS_FILE);
+            String sortedList = cricketLeagueAnalyser.toSort(Sort.sortfields.MAXIMUM_RUNS, Sort.sortfields.AVG_BATTING_RATE);
             Batsman[] ipl = new Gson().fromJson(sortedList, Batsman[].class);
             Assert.assertEquals("David Warner", ipl[0].player);
         } catch (CricketLeagueException e) {
