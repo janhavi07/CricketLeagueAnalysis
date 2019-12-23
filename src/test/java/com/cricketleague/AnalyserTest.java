@@ -46,12 +46,12 @@ public class AnalyserTest {
 
     @Test
     public void givenIPLFile_ShouldSortTheData_AndGiveTopBattingAverage() {
-        CricketLeagueAnalyser cricketLeagueAnalyser = new CricketLeagueAnalyser();
+        CricketLeagueAnalyser cricketLeagueAnalyser = new CricketLeagueAnalyser(CricketLeagueAnalyser.Players.BATSMAN);
         try {
             cricketLeagueAnalyser.loadData(CricketLeagueAnalyser.Players.BATSMAN,RUNS_FILE);
-            //String sortedList = cricketLeagueAnalyser.toSort(Sortfield.AVG_BATTING_RATE);
-            Batsman[] censusCSV = new Gson().fromJson(sortedList, Batsman[].class);
-            Assert.assertEquals("David Warner", censusCSV[0].player);
+            String sortedList = cricketLeagueAnalyser.toSort(Sortfield.AVG_BATTING_RATE);
+            Batsman[] batsmen = new Gson().fromJson(sortedList, Batsman[].class);
+            Assert.assertEquals("David Warner", batsmen[0].player);
         } catch (CricketLeagueException e) {
             e.printStackTrace();
         }

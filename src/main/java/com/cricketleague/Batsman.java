@@ -63,4 +63,22 @@ public class Batsman {
         sixes = iplCSV.sixes;
         ballsFaced = iplCSV.ballsFaced;
     }
+
+    public Batsman(int position, String player, double average, double strikingRate, int matches, int innings, int noOfOvers,
+                   int highScore, int ballsFaced, int runs, int hundreds, int fifths, int fours, int sixes) {
+        this.position = position;
+        this.player = player;
+        this.average = average;
+        this.strikingRate = strikingRate;
+        this.matches = matches;
+        this.innings = innings;
+        this.noOfOvers = noOfOvers;
+        this.highScore = highScore;
+        this.ballsFaced = ballsFaced;
+        this.runs = runs;
+        this.hundreds = hundreds;
+        this.fifths = fifths;
+        this.fours = fours;
+        this.sixes = sixes;
+    }
 }
