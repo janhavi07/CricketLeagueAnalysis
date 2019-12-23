@@ -129,7 +129,7 @@ public class AnalyserTest {
         int getCount = 0;
         try {
             getCount = cricketLeagueAnalyser.loadBowlersData(BOWLER_FILE);
-            Assert.assertEquals(100, getCount);
+            Assert.assertEquals(19, getCount);
         } catch (CricketLeagueException e) {
             e.printStackTrace();
         }

@@ -3,6 +3,7 @@ package com.cricketleague;
 import com.opencsv.bean.CsvBindByName;
 
 public class Bowlers {
+
     @CsvBindByName(column = "POS")
     public int position;
 
@@ -11,9 +12,6 @@ public class Bowlers {
 
     @CsvBindByName(column = "Avg", required = true)
     public double average;
-
-    @CsvBindByName(column = "SR", required = true)
-    public double strikingRate;
 
     @CsvBindByName(column = "Mat", required = true)
     public int matches;
@@ -24,25 +22,26 @@ public class Bowlers {
     @CsvBindByName(column = "Ov", required = true)
     public double noOfOvers;
 
-    @CsvBindByName(column = "HS", required = true)
+    @CsvBindByName(column = "Runs", required = true)
     public int highScore;
 
-    @CsvBindByName(column = "BF", required = true)
+    @CsvBindByName(column = "Wkts", required = true)
     public int ballsFaced;
 
-    @CsvBindByName(column = "Runs",required = true)
+    @CsvBindByName(column = "BBI",required = true)
     public int runs;
 
-    @CsvBindByName(column = "100", required = true)
-    public int hundreds;
+    @CsvBindByName(column = "Econ", required = true)
+    public double fifths;
 
-    @CsvBindByName(column = "50", required = true)
-    public int fifths;
+    @CsvBindByName(column = "SR", required = true)
+    public double strikingRate;
+
 
     @CsvBindByName(column = "4w", required = true)
     public int fours;
 
     @CsvBindByName(column = "5w", required = true)
-    public int sixes;
+    public int fives;
 
 }
