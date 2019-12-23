@@ -156,11 +156,24 @@ public class AnalyserTest {
     }
 
     @Test
-    public void givenBowlerFile_Bowlers_withTopBowlingAverage() {
+    public void givenBowlerFile_ShouldSortTheDataAnd_Bowlers_withTopBowlingAverage() {
         CricketLeagueAnalyser cricketLeagueAnalyser = new CricketLeagueAnalyser(CricketLeagueAnalyser.Players.BOWLERS);
         try {
             cricketLeagueAnalyser.loadData(CricketLeagueAnalyser.Players.BOWLERS, SAMPLE_BOWLER_FILE);
             String sortedList = cricketLeagueAnalyser.toSort(Sortfield.AVG_RATE);
+            Bowlers[] ipl = new Gson().fromJson(sortedList, Bowlers[].class);
+            Assert.assertEquals("Bhuvneshwar Kumar", ipl[0].player);
+        } catch (CricketLeagueException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void giveBowlerFile_ShouldSortTheData_AndGivePLayerWithHigh_StrikingRate() {
+        CricketLeagueAnalyser cricketLeagueAnalyser = new CricketLeagueAnalyser(CricketLeagueAnalyser.Players.BOWLERS);
+        try {
+            cricketLeagueAnalyser.loadData(CricketLeagueAnalyser.Players.BOWLERS, SAMPLE_BOWLER_FILE);
+            String sortedList = cricketLeagueAnalyser.toSort(Sortfield.STRIKING_RATE);
             Bowlers[] ipl = new Gson().fromJson(sortedList, Bowlers[].class);
             Assert.assertEquals("Bhuvneshwar Kumar", ipl[0].player);
         } catch (CricketLeagueException e) {
