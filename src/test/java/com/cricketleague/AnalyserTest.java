@@ -180,5 +180,18 @@ public class AnalyserTest {
             e.printStackTrace();
         }
     }
+
+    @Test
+    public void giveBowlerFile_ShouldSortTheData_AndGivePLayerWith_BestEconomyRate() {
+        CricketLeagueAnalyser cricketLeagueAnalyser = new CricketLeagueAnalyser(CricketLeagueAnalyser.Players.BOWLERS);
+        try {
+            cricketLeagueAnalyser.loadData(CricketLeagueAnalyser.Players.BOWLERS, SAMPLE_BOWLER_FILE);
+            String sortedList = cricketLeagueAnalyser.toSort(Sortfield.ECONOMY_RATE);
+            Bowlers[] ipl = new Gson().fromJson(sortedList, Bowlers[].class);
+            Assert.assertEquals("Lasith Malinga", ipl[0].player);
+        } catch (CricketLeagueException e) {
+            e.printStackTrace();
+        }
+    }
 }
 
