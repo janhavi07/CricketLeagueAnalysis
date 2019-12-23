@@ -14,13 +14,13 @@ import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 public class CricketLeagueAnalyser {
-    Map<String, Batsman> batsmanList;
+    Map<String,IPLDao> iplList;
 
     public CricketLeagueAnalyser() {
-        this.batsmanList = new HashMap<>();
+        this.iplList = new HashMap<>();
     }
 
-    public int loadData(String runsFile) throws CricketLeagueException {
+    public int loadBatsmanData(String runsFile) throws CricketLeagueException {
         try {
             Reader reader = Files.newBufferedReader(Paths.get(runsFile));
             ICSVBuilder icsvBuilder = CSVBuilderFactory.createCSVBuilder();
@@ -28,8 +28,8 @@ public class CricketLeagueAnalyser {
             Iterable<Batsman> batsmanIterable = () -> csvIterator;
             StreamSupport.stream(batsmanIterable.spliterator(), false).
                     map(Batsman.class::cast).
-                    forEach(iplCSV -> batsmanList.put(iplCSV.player, new Batsman(iplCSV)));
-            return batsmanList.size();
+                    forEach(iplCSV -> iplList.put(iplCSV.player, new IPLDao(iplCSV)));
+            return iplList.size();
         } catch (IOException e) {
             throw new CricketLeagueException(CricketLeagueException.ExceptionType.FILE_PROBLEM, "Wrong file inputted");
         } catch (CSVBuilderException e) {
@@ -39,8 +39,10 @@ public class CricketLeagueAnalyser {
         }
     }
 
-    public String toSort(Sort.sortfields... sortfields) {
-        Comparator<Batsman> comparator = null;
+
+
+    public String toSort(Sortfield... sortfields) {
+        Comparator<IPLDao> comparator = null;
         if (sortfields.length == 2) {
             comparator = new Sort().getField(sortfields[0]).thenComparing(new Sort().getField(sortfields[1]));
             return this.getSortedString(comparator);
@@ -49,11 +51,29 @@ public class CricketLeagueAnalyser {
         return this.getSortedString(comparator);
     }
 
-    private String getSortedString(Comparator<Batsman> CSVComparator) {
-        ArrayList c = batsmanList.values().stream()
+    private String getSortedString(Comparator<IPLDao> CSVComparator) {
+        ArrayList c = iplList.values().stream()
                 .sorted(CSVComparator)
                 .collect(Collectors.toCollection(ArrayList::new));
         String sortedData = new Gson().toJson(c);
         return sortedData;
+    }
+
+    public int loadBowlersData(String bowlerFile) throws CricketLeagueException {
+        try {
+            Reader reader = Files.newBufferedReader(Paths.get(bowlerFile));
+            ICSVBuilder icsvBuilder = CSVBuilderFactory.createCSVBuilder();
+            Iterator<Bowlers> csvIterator = icsvBuilder.getCSVFileIterator(reader, Bowlers.class);
+            Iterable<Bowlers> bowlerIterable = () -> csvIterator;
+            StreamSupport.stream(bowlerIterable.spliterator(), false).
+                    map(Bowlers.class::cast).
+                    forEach(iplCSV -> iplList.put(iplCSV.player, new IPLDao(iplCSV)));
+            return iplList.size();
+        } catch (IOException e) {
+            throw new CricketLeagueException(CricketLeagueException.ExceptionType.FILE_PROBLEM, "Wrong file inputted");
+        } catch (CSVBuilderException e) {
+            throw new CricketLeagueException(CricketLeagueException.ExceptionType.BUILDER_EXCEPTION, e.getMessage());
+        }
+
     }
 }

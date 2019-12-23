@@ -1,0 +1,4 @@
+package com.cricketleague;
+
+public enum Sortfield {AVG_BATTING_RATE, STRIKING_RATE, FOURS_SIXES, BEST_STRIKING_RATE_WITH6S_4S,MAXIMUM_RUNS}
+
