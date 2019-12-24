@@ -43,6 +43,9 @@ public class Bowlers {
     @CsvBindByName(column = "5w", required = true)
     public int fives;
 
+    public Bowlers() {
+    }
+
     public Bowlers(int position, String player, double average, int matches, int innings, double noOfOvers, int runs, int wickets,
                    int bbi, double econ, double strikingRate, int fours, int fives) {
         this.position = position;

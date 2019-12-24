@@ -1,6 +1,9 @@
 package com.cricketleague;
 
 public class IPLDao {
+
+    public double bowlingAverage;
+    public double battingAverage;
     public int fives;
     public double econ;
     public int bbi;
@@ -15,7 +18,6 @@ public class IPLDao {
     public int innings;
     public int position;
     public int sixes;
-    public double average;
     public int matches;
     public int runs;
     public String playerName;
@@ -28,7 +30,7 @@ public class IPLDao {
         innings=batsman.innings;
         matches = batsman.matches;
         noOfOvers=batsman.noOfOvers;
-        average=batsman.average;
+        battingAverage=batsman.average;
         HS=batsman.highScore;
         fours= batsman.fours;
         sixes=batsman.sixes;
@@ -47,7 +49,7 @@ public class IPLDao {
         runs=bowlers.runs;
         wickets=bowlers.wickets;
         bbi=bowlers.bbi;
-        average=bowlers.average;
+        bowlingAverage=bowlers.average;
         econ=bowlers.econ;
         strikingRate=bowlers.strikingRate;
         fours=bowlers.fours;
@@ -56,8 +58,8 @@ public class IPLDao {
 
     public Object getIPLDao(Object player) {
         if(player.equals(CricketLeagueAnalyser.Players.BATSMAN))
-            return new Batsman(position,playerName,average, strikingRate, matches, innings,noOfOvers,HS,BF,
+            return new Batsman(position,playerName,battingAverage, strikingRate, matches, innings,noOfOvers,HS,BF,
                     runs,hundreds, fifths,fours, sixes);
-        else return new Bowlers(position, playerName,average,matches,innings, noOfOvers, runs, wickets,bbi, econ, strikingRate, fours, fives);
+        else return new Bowlers(position, playerName,bowlingAverage,matches,innings, noOfOvers, runs, wickets,bbi, econ, strikingRate, fours, fives);
     }
 }
