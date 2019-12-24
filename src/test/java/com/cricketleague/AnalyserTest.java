@@ -238,7 +238,7 @@ public class AnalyserTest {
         CricketLeagueAnalyser cricketLeagueAnalyser = new CricketLeagueAnalyser(CricketLeagueAnalyser.Players.BATSMAN);
         try {
             cricketLeagueAnalyser.loadData(CricketLeagueAnalyser.Players.BATSMAN, RUNS_FILE, BOWLER_FILE);
-            String sortedList = cricketLeagueAnalyser.toSort(Sortfield.BATTING_AVG_RATE, Sortfield.BOWLING_AVG_RATE);
+            String sortedList = cricketLeagueAnalyser.toSort(Sortfield.MAXIMUM_RUNS, Sortfield.WICKETS);
             IPLDao[] ipl = new Gson().fromJson(sortedList, IPLDao[].class);
             Assert.assertEquals("David Warner", ipl[0].playerName);
         } catch (CricketLeagueException e) {
