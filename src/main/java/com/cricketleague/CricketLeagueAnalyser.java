@@ -9,6 +9,7 @@ public class CricketLeagueAnalyser {
     private Object Players;
 
     public enum Players {BATSMAN, BOWLERS}
+    public IPLAdapter iplAdapter;
 
     Map<String, IPLDao> iplList;
 
@@ -20,11 +21,18 @@ public class CricketLeagueAnalyser {
         this.Players = player;
     }
 
-    ;
+    public void setIplAdapter(IPLAdapter iplAdapter) {
+        this.iplAdapter = iplAdapter;
+    }
+
+    public static IPLAdapter getIplAdapter(CricketLeagueAnalyser.Players players){
+        return IPLAdapterFactory.getIPLAdapter(players);
+    }
 
     public int loadData(CricketLeagueAnalyser.Players players, String... csvFile) throws CricketLeagueException {
-        IPLAdapter iplAdapter = new IPLAdapterFactory().getIPLAdapter(players);
-        iplList = iplAdapter.loadPLayerData(csvFile);
+//        IPLAdapter iplAdapter = new IPLAdapterFactory().getIPLAdapter(players);
+        this.iplList=this.iplAdapter.loadPLayerData(csvFile);
+//        iplList = iplAdapter.loadPLayerData(csvFile);
         return iplList.size();
     }
 

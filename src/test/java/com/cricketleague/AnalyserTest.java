@@ -6,7 +6,7 @@ import org.junit.Test;
 
 public class AnalyserTest {
 
-    private static final String RUNS_FILE = "./src/test/resources/IPL2019FactsheetMostRuns.csv";
+    private static final String BATSMAN_FILE = "./src/test/resources/IPL2019FactsheetMostRuns.csv";
     private static final String WRONG_FILE = "./src/test/resources/IPL2019FactsheetRuns.csv";
     private static final String INCORRECT_DELIMITER_FILE = "./src/test/resources/IncorrectDelimiterIPL2019FactsheetMostRuns.csv";
     private static final String SAMPLE_BOWLER_FILE = "/home/admin1/Desktop/Janhavi/CricketLeagueAnalysis/src/test/resources/SampleBowlerData.csv";
@@ -17,7 +17,9 @@ public class AnalyserTest {
         CricketLeagueAnalyser cricketLeagueAnalyser = new CricketLeagueAnalyser(CricketLeagueAnalyser.Players.BATSMAN);
         int getCount = 0;
         try {
-            getCount = cricketLeagueAnalyser.loadData(CricketLeagueAnalyser.Players.BATSMAN, RUNS_FILE);
+            IPLAdapter iplAdapter = CricketLeagueAnalyser.getIplAdapter(CricketLeagueAnalyser.Players.BATSMAN);
+            cricketLeagueAnalyser.setIplAdapter(IPLAdapterFactory.getIPLAdapter(CricketLeagueAnalyser.Players.BATSMAN));
+            getCount = cricketLeagueAnalyser.loadData(CricketLeagueAnalyser.Players.BATSMAN, BATSMAN_FILE);
             Assert.assertEquals(100, getCount);
         } catch (CricketLeagueException e) {
             e.printStackTrace();
@@ -28,6 +30,7 @@ public class AnalyserTest {
     public void givenWrongFile_ShouldThrowException() {
         CricketLeagueAnalyser cricketLeagueAnalyser = new CricketLeagueAnalyser(CricketLeagueAnalyser.Players.BATSMAN);
         try {
+            cricketLeagueAnalyser.setIplAdapter(IPLAdapterFactory.getIPLAdapter(CricketLeagueAnalyser.Players.BATSMAN));
             cricketLeagueAnalyser.loadData(CricketLeagueAnalyser.Players.BATSMAN, WRONG_FILE);
         } catch (CricketLeagueException e) {
             Assert.assertEquals(CricketLeagueException.ExceptionType.FILE_PROBLEM, e.type);
@@ -38,6 +41,7 @@ public class AnalyserTest {
     public void givenFileWithIncorrectDelimiter_ShouldThrowException() {
         CricketLeagueAnalyser cricketLeagueAnalyser = new CricketLeagueAnalyser(CricketLeagueAnalyser.Players.BATSMAN);
         try {
+            cricketLeagueAnalyser.setIplAdapter(IPLAdapterFactory.getIPLAdapter(CricketLeagueAnalyser.Players.BATSMAN));
             cricketLeagueAnalyser.loadData(CricketLeagueAnalyser.Players.BATSMAN, INCORRECT_DELIMITER_FILE);
         } catch (CricketLeagueException e) {
             Assert.assertEquals(CricketLeagueException.ExceptionType.HEADER_INCORRECT, e.type);
@@ -48,7 +52,7 @@ public class AnalyserTest {
     public void givenIPLFile_ShouldSortTheData_AndGiveTopBattingAverage() {
         CricketLeagueAnalyser cricketLeagueAnalyser = new CricketLeagueAnalyser(CricketLeagueAnalyser.Players.BATSMAN);
         try {
-            cricketLeagueAnalyser.loadData(CricketLeagueAnalyser.Players.BATSMAN, RUNS_FILE);
+            cricketLeagueAnalyser.loadData(CricketLeagueAnalyser.Players.BATSMAN, BATSMAN_FILE);
             String sortedList = cricketLeagueAnalyser.toSort(Sortfield.BATTING_AVG_RATE);
             Batsman[] batsmen = new Gson().fromJson(sortedList, Batsman[].class);
             Assert.assertEquals("David Warner", batsmen[0].player);
@@ -61,7 +65,7 @@ public class AnalyserTest {
     public void givenIPLFile_ShouldSortTheData_AndGivePLayerWithHigh_StrikingRate() {
         CricketLeagueAnalyser cricketLeagueAnalyser = new CricketLeagueAnalyser(CricketLeagueAnalyser.Players.BATSMAN);
         try {
-            cricketLeagueAnalyser.loadData(CricketLeagueAnalyser.Players.BATSMAN, RUNS_FILE);
+            cricketLeagueAnalyser.loadData(CricketLeagueAnalyser.Players.BATSMAN, BATSMAN_FILE);
             String sortedList = cricketLeagueAnalyser.toSort(Sortfield.STRIKING_RATE);
             Batsman[] ipl = new Gson().fromJson(sortedList, Batsman[].class);
             Assert.assertEquals("Ishant Sharma", ipl[0].player);
@@ -74,7 +78,7 @@ public class AnalyserTest {
     public void givenIPLFile_ShouldSortAndGiveCricketer_WithMaximum6s_And4s() {
         CricketLeagueAnalyser cricketLeagueAnalyser = new CricketLeagueAnalyser(CricketLeagueAnalyser.Players.BATSMAN);
         try {
-            cricketLeagueAnalyser.loadData(CricketLeagueAnalyser.Players.BATSMAN, RUNS_FILE);
+            cricketLeagueAnalyser.loadData(CricketLeagueAnalyser.Players.BATSMAN, BATSMAN_FILE);
             String sortedList = cricketLeagueAnalyser.toSort(Sortfield.FOURS_SIXES);
             Batsman[] ipl = new Gson().fromJson(sortedList, Batsman[].class);
             Assert.assertEquals("Andre Russell", ipl[0].player);
@@ -87,7 +91,7 @@ public class AnalyserTest {
     public void givenIPLFile_BestStrikingRate_With6S_4S() {
         CricketLeagueAnalyser cricketLeagueAnalyser = new CricketLeagueAnalyser(CricketLeagueAnalyser.Players.BATSMAN);
         try {
-            cricketLeagueAnalyser.loadData(CricketLeagueAnalyser.Players.BATSMAN, RUNS_FILE);
+            cricketLeagueAnalyser.loadData(CricketLeagueAnalyser.Players.BATSMAN, BATSMAN_FILE);
             String sortedList = cricketLeagueAnalyser.toSort(Sortfield.BEST_STRIKING_RATE_WITH6S_4S);
             Batsman[] ipl = new Gson().fromJson(sortedList, Batsman[].class);
             Assert.assertEquals("Ishant Sharma", ipl[0].player);
@@ -100,7 +104,7 @@ public class AnalyserTest {
     public void givenIPLFile_CricketersWithBestAverages_BestStriking() {
         CricketLeagueAnalyser cricketLeagueAnalyser = new CricketLeagueAnalyser(CricketLeagueAnalyser.Players.BATSMAN);
         try {
-            cricketLeagueAnalyser.loadData(CricketLeagueAnalyser.Players.BATSMAN, RUNS_FILE);
+            cricketLeagueAnalyser.loadData(CricketLeagueAnalyser.Players.BATSMAN, BATSMAN_FILE);
             String sortedList = cricketLeagueAnalyser.toSort(Sortfield.BATTING_AVG_RATE, Sortfield.STRIKING_RATE);
             Batsman[] ipl = new Gson().fromJson(sortedList, Batsman[].class);
             Assert.assertEquals("David Warner", ipl[0].player);
@@ -113,7 +117,7 @@ public class AnalyserTest {
     public void givenIPLFile_CricketersWithMaximumRuns_WithBestAverages() {
         CricketLeagueAnalyser cricketLeagueAnalyser = new CricketLeagueAnalyser(CricketLeagueAnalyser.Players.BATSMAN);
         try {
-            cricketLeagueAnalyser.loadData(CricketLeagueAnalyser.Players.BATSMAN, RUNS_FILE);
+            cricketLeagueAnalyser.loadData(CricketLeagueAnalyser.Players.BATSMAN, BATSMAN_FILE);
             String sortedList = cricketLeagueAnalyser.toSort(Sortfield.MAXIMUM_RUNS, Sortfield.BATTING_AVG_RATE);
             Batsman[] ipl = new Gson().fromJson(sortedList, Batsman[].class);
             Assert.assertEquals("David Warner", ipl[0].player);
@@ -237,7 +241,7 @@ public class AnalyserTest {
     public void giveBothTheFiles_GivesBestBattingAndBowlingRates() {
         CricketLeagueAnalyser cricketLeagueAnalyser = new CricketLeagueAnalyser(CricketLeagueAnalyser.Players.BATSMAN);
         try {
-            cricketLeagueAnalyser.loadData(CricketLeagueAnalyser.Players.BATSMAN, RUNS_FILE, BOWLER_FILE);
+            cricketLeagueAnalyser.loadData(CricketLeagueAnalyser.Players.BATSMAN, BATSMAN_FILE, BOWLER_FILE);
             String sortedList = cricketLeagueAnalyser.toSort(Sortfield.MAXIMUM_RUNS, Sortfield.WICKETS);
             IPLDao[] ipl = new Gson().fromJson(sortedList, IPLDao[].class);
             Assert.assertEquals("David Warner", ipl[0].playerName);

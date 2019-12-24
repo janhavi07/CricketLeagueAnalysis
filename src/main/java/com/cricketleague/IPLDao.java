@@ -56,6 +56,9 @@ public class IPLDao {
         fives=bowlers.fives;
     }
 
+    public IPLDao(String message, double value) {
+    }
+
     public Object getIPLDao(Object player) {
         if(player.equals(CricketLeagueAnalyser.Players.BATSMAN))
             return new Batsman(position,playerName,battingAverage, strikingRate, matches, innings,noOfOvers,HS,BF,
